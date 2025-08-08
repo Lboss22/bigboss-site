@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats Admin - Big Boss</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Dark background */
+            color: #F3F4F6; /* Light text */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #FBBF24, #F59E0B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .chart-container {
+            position: relative;
+            height: 400px; /* Hauteur fixe pour le graphique */
+            width: 100%;
+            max-width: 600px; /* Largeur maximale pour le graphique */
+            margin: 0 auto; /* Centrer le graphique */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div class="bg-gray-800 p-8 rounded-lg shadow-xl max-w-2xl w-full text-center mb-8">
+        <h1 class="text-3xl font-bold mb-6 gradient-text">Tableau de bord - Résultats des Votes</h1>
+        <p class="text-gray-400 mb-4">Mise à jour automatique toutes les 5 secondes.</p>
+        <button onclick="window.location.href='/'" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-400 transition-colors duration-300">Retour à l'accueil</button>
+    </div>
+
+    <div class="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-2xl">
+        <div class="chart-container">
+            <canvas id="resultsChart"></canvas>
+        </div>
+        <div id="results-list" class="mt-8 text-left">
+            <!-- Les résultats détaillés seront affichés ici -->
+        </div>
+    </div>
+
+    <script>
+        let myChart; // Variable pour stocker l'instance du graphique
+
+        async function fetchData() {
+            try {
+                // MODIFICATION ICI : Utilisation de l'URL absolue pour la requête fetch
+                const response = await fetch('http://127.0.0.1:5000/results');
+                const data = await response.json();
+
+                const labels = Object.keys(data);
+                const counts = labels.map(label => data[label].count);
+                const percentages = labels.map(label => data[label].percent);
+
+                const ctx = document.getElementById('resultsChart').getContext('2d');
+
+                // Détruit le graphique existant s'il y en a un
+                if (myChart) {
+                    myChart.destroy();
+                }
+
+                myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Votes',
+                            data: counts,
+                            backgroundColor: [
+                                '#FBBF24', // Amber-400
+                                '#36A2EB', // Blue
+                                '#FF6384', // Red
+                                '#4BC0C0', // Teal
+                                '#9966FF', // Purple
+                                '#FF9F40'  // Orange
+                            ],
+                            borderColor: '#111827',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false, // Permet de mieux contrôler la taille
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#F3F4F6' // Couleur du texte de la légende
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed !== null) {
+                                            label += context.parsed + ' votes (' + percentages[context.dataIndex] + '%)';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Afficher les résultats sous forme de liste
+                const resultsList = document.getElementById('results-list');
+                resultsList.innerHTML = '<h3 class="text-2xl font-bold mb-4 gradient-text">Détails des Votes</h3>';
+                labels.forEach(label => {
+                    resultsList.innerHTML += `
+                        <p class="text-lg text-gray-300 mb-2">
+                            <span class="font-semibold">${label}:</span> ${data[label].count} votes (${data[label].percent}%)
+                        </p>
+                    `;
+                });
+
+            } catch (error) {
+                console.error('Erreur lors de la récupération des données de vote:', error);
+                // Afficher un message d'erreur à l'utilisateur si la récupération échoue
+                const resultsList = document.getElementById('results-list');
+                resultsList.innerHTML = '<p class="text-red-500">Impossible de charger les résultats des votes. Veuillez réessayer plus tard.</p>';
+            }
+        }
+
+        fetchData();
+        setInterval(fetchData, 5000); // Rafraîchit toutes les 5s
+    </script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Boss - Zone Urbaine</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom styles for a polished look and animations */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Dark background */
+            color: #F3F4F6; /* Light text */
+            scroll-behavior: smooth;
+        }
+
+        /* Custom gradient text */
+        .gradient-text {
+            background: linear-gradient(90deg, #FBBF24, #F59E0B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animation for sections fading in on scroll */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Styling for the video containers */
+        .video-responsive {
+            overflow: hidden;
+            padding-bottom: 56.25%;
+            position: relative;
+            height: 0;
+        }
+
+        .video-responsive iframe {
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+        
+        /* Custom button style */
+        .btn-vote {
+            transition: all 0.3s ease;
+        }
+        .btn-vote:disabled {
+            background-color: #4B5563;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+        .btn-vote:disabled:hover {
+            background-color: #4B5563;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+
+    <!-- Header -->
+    <header class="bg-gray-900/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <!-- REMARQUE: Le logo est chargé depuis le même dossier que ce fichier HTML. -->
+                <!-- Assurez-vous que 'BigBoss.png' se trouve dans 'C:\Users\loicn\Documents\BigBoss\' -->
+                <img src="https://placehold.co/48x48/111827/FBBF24?text=BB" alt="Logo Big Boss" class="h-12 mr-3 rounded-full">
+                <span class="text-2xl font-black tracking-wider gradient-text">BIG BOSS</span>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-lg">
+                <a href="#accueil" class="hover:text-amber-400 transition-colors duration-300">Accueil</a>
+                <a href="#direct" class="hover:text-amber-400 transition-colors duration-300">En Direct</a>
+                <a href="#rediffusions" class="hover:text-amber-400 transition-colors duration-300">Rediffusions</a>
+                <a href="#vote" class="hover:text-amber-400 transition-colors duration-300">Voter</a>
+                <a href="#contact" class="hover:text-amber-400 transition-colors duration-300">Contact</a>
+                <a href="/admin_login" class="hover:text-amber-400 transition-colors duration-300">Admin</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#accueil" class="block py-2 text-center hover:bg-gray-700 rounded">Accueil</a>
+            <a href="#direct" class="block py-2 text-center hover:bg-gray-700 rounded">En Direct</a>
+            <a href="#rediffusions" class="block py-2 text-center hover:bg-gray-700 rounded">Rediffusions</a>
+            <a href="#vote" class="block py-2 text-center hover:bg-gray-700 rounded">Voter</a>
+            <a href="#contact" class="block py-2 text-center hover:bg-gray-700 rounded">Contact</a>
+            <a href="/admin_login" class="block py-2 text-center hover:bg-gray-700 rounded">Admin</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="accueil" class="min-h-screen flex items-center justify-center text-center bg-cover bg-center" style="background-image: linear-gradient(rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.8)), url('https://placehold.co/1920x1080/111827/FBBF24?text=Zone+Urbaine');">
+            <div class="scroll-animate">
+                <h1 class="text-5xl md:text-8xl font-black uppercase tracking-widest gradient-text">Zone Urbaine</h1>
+                <p class="text-xl md:text-2xl mt-4 text-gray-300">La compétition musicale qui révèle les talents de demain.</p>
+                <a href="#vote" class="mt-8 inline-block bg-amber-500 text-gray-900 font-bold py-4 px-10 rounded-full text-lg hover:bg-amber-400 transform hover:scale-105 transition-all duration-300">Votez maintenant !</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 bg-gray-900">
+            <div class="container mx-auto px-6 text-center scroll-animate">
+                <h2 class="text-4xl font-bold mb-4">À propos de <span class="gradient-text">Big Boss</span></h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-400">
+                    Fondé en 2021 avec Alvin Sakandé, Big Boss s'est imposé comme un acteur majeur de l'événementiel. Après le succès de la "Fête des Saucisses" et les trois éditions mémorables de "Last Last", nous lançons une nouvelle expérience : Zone Urbaine. Notre mission est de créer des moments inoubliables et de promouvoir la culture.
+                </p>
+            </div>
+        </section>
+
+        <!-- Live Section -->
+        <section id="direct" class="py-20 bg-gray-800">
+            <div class="container mx-auto px-6 scroll-animate">
+                <h2 class="text-4xl font-bold text-center mb-10">Regardez la compétition <span class="gradient-text">En Direct</span></h2>
+                <div class="max-w-4xl mx-auto bg-black rounded-lg shadow-2xl overflow-hidden">
+                    <div class="video-responsive">
+                        <!-- REMARQUE: Remplacez le lien ci-dessous par le lien 'embed' de votre direct YouTube. -->
+                        <!-- Exemple: https://www.youtube.com/embed/LIVE_VIDEO_ID -->
+                        <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Replays Section -->
+        <section id="rediffusions" class="py-20 bg-gray-900">
+            <div class="container mx-auto px-6 scroll-animate">
+                <h2 class="text-4xl font-bold text-center mb-12">Rediffusions des <span class="gradient-text">Émissions</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Vidéo 1 -->
+                    <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="video-responsive">
+                            <!-- REMARQUE: Remplacez par le lien 'embed' de votre vidéo de rediffusion -->
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="Rediffusion 1" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg">Titre de la Rediffusion 1</h3>
+                        </div>
+                    </div>
+                    <!-- Vidéo 2 -->
+                    <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="video-responsive">
+                             <!-- REMARQUE: Remplacez par le lien 'embed' de votre vidéo de rediffusion -->
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Rediffusion 2" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg">Titre de la Rediffusion 2</h3>
+                        </div>
+                    </div>
+                    <!-- Vidéo 3 -->
+                    <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="video-responsive">
+                             <!-- REMARQUE: Remplacez par le lien 'embed' de votre vidéo de rediffusion -->
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="Rediffusion 3" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg">Titre de la Rediffusion 3</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vote Section -->
+        <section id="vote" class="py-20 bg-gray-800">
+            <div class="container mx-auto px-6 scroll-animate">
+                <h2 class="text-4xl font-bold text-center mb-12">Votez pour votre <span class="gradient-text">Candidat Préféré</span></h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    
+                    <!-- Modèle de Candidat 1 -->
+                    <div class="bg-gray-900 rounded-lg shadow-xl text-center p-6 transform hover:scale-105 transition-transform duration-300">
+                        <!-- REMARQUE: Remplacez 'placeholder.jpg' par le chemin de l'image de votre candidat -->
+                        <img src="https://placehold.co/300x300/1F2937/FBBF24?text=Artiste+1" alt="Candidat 1" class="w-40 h-40 rounded-full mx-auto mb-4 border-4 border-amber-400">
+                        <!-- REMARQUE: Remplacez 'Nom du Candidat 1' par le vrai nom -->
+                        <h3 class="text-2xl font-bold mb-2 candidate-name">Nom du Candidat 1</h3>
+                        <p class="text-gray-400 mb-4">Style de musique</p>
+                        <button class="btn-vote w-full bg-amber-500 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-amber-400">Voter</button>
+                    </div>
+
+                    <!-- Modèle de Candidat 2 -->
+                    <div class="bg-gray-900 rounded-lg shadow-xl text-center p-6 transform hover:scale-105 transition-transform duration-300">
+                        <!-- REMARQUE: Remplacez 'placeholder.jpg' par le chemin de l'image de votre candidat -->
+                        <img src="https://placehold.co/300x300/1F2937/FBBF24?text=Artiste+2" alt="Candidat 2" class="w-40 h-40 rounded-full mx-auto mb-4 border-4 border-amber-400">
+                        <!-- REMARQUE: Remplacez 'Nom du Candidat 2' par le vrai nom -->
+                        <h3 class="text-2xl font-bold mb-2 candidate-name">Nom du Candidat 2</h3>
+                        <p class="text-gray-400 mb-4">Style de musique</p>
+                        <button class="btn-vote w-full bg-amber-500 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-amber-400">Voter</button>
+                    </div>
+
+                    <!-- Modèle de Candidat 3 -->
+                    <div class="bg-gray-900 rounded-lg shadow-xl text-center p-6 transform hover:scale-105 transition-transform duration-300">
+                        <!-- REMARQUE: Remplacez 'placeholder.jpg' par le chemin de l'image de votre candidat -->
+                        <img src="https://placehold.co/300x300/1F2937/FBBF24?text=Artiste+3" alt="Candidat 3" class="w-40 h-40 rounded-full mx-auto mb-4 border-4 border-amber-400">
+                        <!-- REMARQUE: Remplacez 'Nom du Candidat 3' par le vrai nom -->
+                        <h3 class="text-2xl font-bold mb-2 candidate-name">Nom du Candidat 3</h3>
+                        <p class="text-gray-400 mb-4">Style de musique</p>
+                        <button class="btn-vote w-full bg-amber-500 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-amber-400">Voter</button>
+                    </div>
+                    
+                    <!-- Modèle de Candidat 4 -->
+                    <div class="bg-gray-900 rounded-lg shadow-xl text-center p-6 transform hover:scale-105 transition-transform duration-300">
+                        <!-- REMARQUE: Remplacez 'placeholder.jpg' par le chemin de l'image de votre candidat -->
+                        <img src="https://placehold.co/300x300/1F2937/FBBF24?text=Artiste+4" alt="Candidat 4" class="w-40 h-40 rounded-full mx-auto mb-4 border-4 border-amber-400">
+                        <!-- REMARQUE: Remplacez 'Nom du Candidat 4' par le vrai nom -->
+                        <h3 class="text-2xl font-bold mb-2 candidate-name">Nom du Candidat 4</h3>
+                        <p class="text-gray-400 mb-4">Style de musique</p>
+                        <button class="btn-vote w-full bg-amber-500 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-amber-400">Voter</button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-gray-900">
+            <div class="container mx-auto px-6 text-center scroll-animate">
+                <h2 class="text-4xl font-bold mb-4">Contactez-<span class="gradient-text">Nous</span></h2>
+                <p class="text-lg text-gray-400 mb-8">Pour toute information, partenariat ou question.</p>
+                <div class="text-2xl font-bold text-white space-y-2">
+                    <p>+226 60 80 19 08</p>
+                    <p>+226 55 48 72 76</p>
+                    <p>+226 69 07 54 23</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-700 py-6">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <p>&copy; <span id="year"></span> Big Boss Entertainment. Tous droits réservés.</p>
+            <p class="text-sm mt-2">Conçu avec passion.</p>
+            <!-- Ajout du bouton pour voir les cookies -->
+            <p class="text-sm mt-2"><button id="show-cookies-btn" class="hover:text-amber-400 underline transition-colors">Gérer les cookies</button></p>
+        </div>
+    </footer>
+    
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-900/90 backdrop-blur-sm p-4 text-center text-white z-50 transform translate-y-full transition-transform duration-500">
+        <p class="inline mr-4">Ce site utilise des cookies pour améliorer votre expérience. En continuant, vous acceptez notre utilisation des cookies.</p>
+        <button id="accept-cookies" class="bg-amber-500 text-gray-900 font-bold py-2 px-6 rounded-lg hover:bg-amber-400">Accepter</button>
+    </div>
+
+    <!-- Modal pour afficher les cookies -->
+    <div id="cookie-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm hidden items-center justify-center z-[100]">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-xl max-w-lg w-full m-4 relative">
+            <button id="close-cookie-modal" class="absolute top-2 right-3 text-gray-500 hover:text-white text-2xl font-bold">&times;</button>
+            <h3 class="text-2xl font-bold mb-4 gradient-text">Cookies Actifs sur ce Site</h3>
+            <div id="cookie-display" class="bg-gray-900 p-4 rounded text-sm whitespace-pre-wrap break-all h-48 overflow-y-auto">
+                <!-- Le contenu des cookies sera injecté ici par JS -->
+            </div>
+            <p class="text-xs text-gray-500 mt-4">Ces cookies sont stockés sur votre navigateur. Ils nous aident à nous souvenir de vos préférences, comme l'acceptation de notre politique de cookies.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- Mobile Menu Toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // --- Scroll Animations ---
+            const scrollAnimateElements = document.querySelectorAll('.scroll-animate');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            scrollAnimateElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            // --- Update Footer Year ---
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // --- Voting Logic ---
+            const voteButtons = document.querySelectorAll('.btn-vote');
+            voteButtons.forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    const candidateCard = e.target.closest('div');
+                    const candidateName = candidateCard.querySelector('.candidate-name').textContent; // Utilise la classe pour cibler le nom
+
+                    try {
+                        const response = await fetch(`/vote/${encodeURIComponent(candidateName)}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            // Pas besoin de body si le nom est dans l'URL
+                        });
+                        const data = await response.json();
+
+                        if (data.success) {
+                            // Désactive tous les boutons de vote après un vote réussi
+                            voteButtons.forEach(btn => {
+                                btn.disabled = true;
+                                btn.textContent = 'Merci !';
+                                btn.classList.remove('bg-amber-500', 'hover:bg-amber-400');
+                                btn.classList.add('bg-gray-600', 'cursor-not-allowed');
+                            });
+                            // Met à jour le bouton qui a été cliqué
+                            e.target.textContent = 'Voté !';
+                            e.target.classList.remove('bg-gray-600');
+                            e.target.classList.add('bg-green-500');
+                            console.log('Vote réussi:', data.message);
+                            // Optionnel: Afficher un message de succès à l'utilisateur
+                        } else {
+                            console.error('Erreur de vote:', data.message);
+                            // Optionnel: Afficher un message d'erreur à l'utilisateur
+                        }
+                    } catch (error) {
+                        console.error('Erreur lors de la requête de vote:', error);
+                        // Optionnel: Afficher un message d'erreur réseau
+                    }
+                });
+            });
+            
+            // --- Cookie Consent Logic ---
+            const cookieBanner = document.getElementById('cookie-banner');
+            const acceptCookiesButton = document.getElementById('accept-cookies');
+
+            if (!getCookie('cookies_accepted')) {
+                setTimeout(() => {
+                    cookieBanner.style.transform = 'translateY(0)';
+                }, 1500);
+            }
+
+            acceptCookiesButton.addEventListener('click', () => {
+                setCookie('cookies_accepted', 'true', 365);
+                cookieBanner.style.transform = 'translateY(100%)';
+            });
+
+            function setCookie(name, value, days) {
+                let expires = "";
+                if (days) {
+                    const date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + (value || "") + expires + "; path=/";
+            }
+
+            function getCookie(name) {
+                const nameEQ = name + "=";
+                const ca = document.cookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
+
+            // --- Cookie Viewer Modal Logic ---
+            const showCookiesBtn = document.getElementById('show-cookies-btn');
+            const cookieModal = document.getElementById('cookie-modal');
+            const closeCookieModalBtn = document.getElementById('close-cookie-modal');
+            const cookieDisplay = document.getElementById('cookie-display');
+
+            showCookiesBtn.addEventListener('click', () => {
+                const allCookies = document.cookie;
+                if (allCookies) {
+                    // Format for better readability
+                    const formattedCookies = allCookies.split(';').map(cookie => cookie.trim()).join('\n');
+                    cookieDisplay.textContent = formattedCookies;
+                } else {
+                    cookieDisplay.textContent = "Aucun cookie n'a été trouvé pour ce site.";
+                }
+                cookieModal.classList.remove('hidden');
+                cookieModal.classList.add('flex');
+            });
+
+            function closeCookieModal() {
+                cookieModal.classList.add('hidden');
+                cookieModal.classList.remove('flex');
+            }
+
+            closeCookieModalBtn.addEventListener('click', closeCookieModal);
+
+            // Close modal if clicking on the background
+            cookieModal.addEventListener('click', (e) => {
+                if (e.target === cookieModal) {
+                    closeCookieModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigBoss Group - Pro</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #111827;
+            color: #e5e7eb;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .fade-in { animation: fadeIn 0.8s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Loading Spinner */
+        #loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4f46e5;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-75 flex-col items-center justify-center z-[100] hidden">
+        <div id="loader"></div>
+        <p class="text-white mt-4" id="loading-text">Chargement...</p>
+    </div>
+
+    <!-- =========== PUBLIC SITE =========== -->
+    <div id="public-site">
+        <!-- Header -->
+        <header class="glass-effect sticky top-0 z-50">
+            <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="text-2xl font-bold text-white">
+                    <img src="https://placehold.co/150x50/111827/FFFFFF?text=BigBoss+Group" alt="Logo BigBoss Group" class="h-10">
+                </div>
+                <ul class="hidden md:flex items-center space-x-8">
+                    <li><a href="#hero" class="hover:text-indigo-400">Accueil</a></li>
+                    <li><a href="#about" class="hover:text-indigo-400">À Propos</a></li>
+                    <li><a href="#events" class="hover:text-indigo-400">Événements</a></li>
+                    <li><a href="#shows" class="hover:text-indigo-400">Émissions</a></li>
+                    <li><a href="#vote" class="hover:text-indigo-400">Vote</a></li>
+                    <li><a href="#contact" class="hover:text-indigo-400">Contact</a></li>
+                </ul>
+                <button class="md:hidden" id="mobile-menu-button"><i class="fas fa-bars text-2xl"></i></button>
+            </nav>
+            <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+                 <a href="#hero" class="block py-2 hover:text-indigo-400">Accueil</a>
+                 <a href="#about" class="block py-2 hover:text-indigo-400">À Propos</a>
+                 <a href="#events" class="block py-2 hover:text-indigo-400">Événements</a>
+                 <a href="#shows" class="block py-2 hover:text-indigo-400">Émissions</a>
+                 <a href="#vote" class="block py-2 hover:text-indigo-400">Vote</a>
+                 <a href="#contact" class="block py-2 hover:text-indigo-400">Contact</a>
+            </div>
+        </header>
+
+        <main>
+            <!-- Sections will be populated by JavaScript -->
+            <section id="hero" class="min-h-screen flex items-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop');">
+                <div class="container mx-auto px-6 text-center bg-black bg-opacity-50 p-10 rounded-lg">
+                    <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4 fade-in">Bienvenue chez BigBoss Group</h1>
+                    <p class="text-lg md:text-xl text-gray-300 mb-8 fade-in">Votre partenaire pour des événements et des divertissements inoubliables.</p>
+                </div>
+            </section>
+            <section id="about" class="py-20 bg-gray-900"><div class="container mx-auto px-6"><h2 class="text-3xl font-bold text-center mb-10">À Propos de Nous</h2><div id="about-content" class="max-w-3xl mx-auto text-center text-gray-400 leading-relaxed"></div></div></section>
+            <section id="events" class="py-20"><div class="container mx-auto px-6"><h2 class="text-3xl font-bold text-center mb-12">Nos Événements</h2><div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div></div></section>
+            <section id="shows" class="py-20 bg-gray-900"><div class="container mx-auto px-6"><h2 class="text-3xl font-bold text-center mb-10">Suivez nos Émissions en Direct</h2><div id="youtube-player-container" class="aspect-w-16 aspect-h-9 max-w-4xl mx-auto rounded-lg overflow-hidden shadow-2xl"></div></div></section>
+            <section id="vote" class="py-20"><div class="container mx-auto px-6"><h2 class="text-3xl font-bold text-center mb-12">Votez pour votre Candidat Préféré</h2><div id="candidates-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"></div></div></section>
+            <section id="contact" class="py-20 bg-gray-900"><div class="container mx-auto px-6"><h2 class="text-3xl font-bold text-center mb-10">Contactez-nous</h2><div class="max-w-lg mx-auto glass-effect rounded-lg p-8"><form id="contact-form"><div class="mb-4"><label for="name" class="block mb-2">Nom</label><input type="text" id="name" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 focus:outline-none focus:border-indigo-500" required></div><div class="mb-4"><label for="email" class="block mb-2">Email</label><input type="email" id="email" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 focus:outline-none focus:border-indigo-500" required></div><div class="mb-4"><label for="message" class="block mb-2">Message</label><textarea id="message" rows="4" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 focus:outline-none focus:border-indigo-500" required></textarea></div><button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded">Envoyer</button></form></div></div></section>
+        </main>
+
+        <footer class="bg-gray-900 py-6">
+            <div class="container mx-auto px-6 text-center text-gray-500">
+                <p>&copy; 2024. Créé par Digital Training school pour BigBoss Group.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- =========== ADMIN PANEL (hidden by default) =========== -->
+    <div id="admin-panel" class="hidden min-h-screen bg-gray-900 p-4 sm:p-8">
+        <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+            <div class="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-sm"><h2 class="text-2xl font-bold text-center mb-6">Accès Administrateur</h2><form id="login-form"><div class="mb-4"><label for="password" class="block mb-2">Mot de passe</label><input type="password" id="password" class="w-full bg-gray-700 border border-gray-600 rounded py-2 px-3"></div><button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">Se connecter</button><p id="login-error" class="text-red-500 text-center mt-4 hidden">Mot de passe incorrect.</p></form></div>
+        </div>
+        <div id="dashboard" class="hidden">
+            <div class="flex justify-between items-center mb-8"><h1 class="text-3xl font-bold">Panneau d'Administration</h1><button id="logout-button" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Déconnexion</button></div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="glass-effect p-6 rounded-lg"><h2 class="text-2xl font-semibold mb-4">Gérer les Paramètres</h2><form id="settings-form"><label for="youtube-link" class="block mb-2">Lien Live YouTube</label><input type="url" id="youtube-link" placeholder="https://www.youtube.com/embed/..." class="w-full bg-gray-800 p-2 rounded mb-4"><button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Sauvegarder</button></form></div>
+                <div class="glass-effect p-6 rounded-lg"><h2 class="text-2xl font-semibold mb-4">Gérer "À Propos"</h2><form id="about-form"><textarea id="about-editor" rows="6" class="w-full bg-gray-800 p-2 rounded mb-4"></textarea><button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Sauvegarder</button></form></div>
+                <div class="glass-effect p-6 rounded-lg"><h2 class="text-2xl font-semibold mb-4">Gérer les Événements</h2><form id="event-form" class="mb-6"><input type="text" id="event-title" placeholder="Titre" class="w-full bg-gray-800 p-2 rounded mb-2" required><label class="block mb-2">Image</label><input type="file" id="event-image" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" required><textarea id="event-desc" placeholder="Description" class="w-full bg-gray-800 p-2 rounded mt-2" required></textarea><button type="submit" class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Ajouter</button></form><div id="events-list-admin" class="space-y-2"></div></div>
+                <div class="glass-effect p-6 rounded-lg"><h2 class="text-2xl font-semibold mb-4">Gérer les Candidats</h2><form id="candidate-form" class="mb-6"><input type="text" id="candidate-name" placeholder="Nom" class="w-full bg-gray-800 p-2 rounded mb-2" required><label class="block mb-2">Photo</label><input type="file" id="candidate-photo" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" required><button type="submit" class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Ajouter</button></form><div id="candidates-list-admin" class="space-y-2"></div></div>
+                <div class="glass-effect p-6 rounded-lg"><h2 class="text-2xl font-semibold mb-4">Résultats des Votes</h2><div id="votes-results" class="space-y-2 mb-4"></div><button id="reset-votes" class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Réinitialiser</button></div>
+                <div class="glass-effect p-6 rounded-lg lg:col-span-2"><h2 class="text-2xl font-semibold mb-4">Messages Reçus</h2><div id="messages-list" class="space-y-4 max-h-96 overflow-y-auto"></div></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="toast" class="fixed bottom-5 right-5 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg hidden"></div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, addDoc, deleteDoc, writeBatch, query, getDocs, increment } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+
+        // *********************************************************************************
+        // ** IMPORTANT: Remplacez cet objet par votre propre configuration Firebase ! **
+        // ** Pour l'obtenir, créez un projet sur https://console.firebase.google.com/ **
+        // *********************************************************************************
+      const firebaseConfig = {
+  apiKey: "AIzaSyDovNu0v4WX1q2JvyVypaQC4QGSkMZ81xw",
+  authDomain: "bigboss-d18a3.firebaseapp.com",
+  projectId: "bigboss-d18a3",
+  storageBucket: "bigboss-d18a3.firebasestorage.app",
+  messagingSenderId: "1008754584753",
+  appId: "1:1008754584753:web:15f78f16c18434f7894690",
+  measurementId: "G-VV34J5ZC27"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+        const auth = getAuth(app);
+
+        // --- DOM ELEMENTS ---
+        const DOMElements = {
+            loadingOverlay: document.getElementById('loading-overlay'),
+            loadingText: document.getElementById('loading-text'),
+            publicSite: document.getElementById('public-site'),
+            adminPanel: document.getElementById('admin-panel'),
+            loginModal: document.getElementById('login-modal'),
+            dashboard: document.getElementById('dashboard'),
+            toast: document.getElementById('toast'),
+            aboutContent: document.getElementById('about-content'),
+            eventsGrid: document.getElementById('events-grid'),
+            candidatesGrid: document.getElementById('candidates-grid'),
+            youtubePlayerContainer: document.getElementById('youtube-player-container'),
+            // Admin elements
+            aboutEditor: document.getElementById('about-editor'),
+            eventsListAdmin: document.getElementById('events-list-admin'),
+            candidatesListAdmin: document.getElementById('candidates-list-admin'),
+            votesResults: document.getElementById('votes-results'),
+            messagesList: document.getElementById('messages-list'),
+            youtubeLinkInput: document.getElementById('youtube-link'),
+        };
+
+        const ADMIN_PASSWORD = 'Lifeisabitch13';
+        let adminLoggedIn = false;
+
+        // --- UTILS ---
+        const showLoader = (text = 'Chargement...') => {
+            DOMElements.loadingText.textContent = text;
+            DOMElements.loadingOverlay.classList.remove('hidden');
+            DOMElements.loadingOverlay.classList.add('flex');
+        };
+        const hideLoader = () => {
+            DOMElements.loadingOverlay.classList.add('hidden');
+            DOMElements.loadingOverlay.classList.remove('flex');
+        };
+        const showToast = (message, isError = false) => {
+            DOMElements.toast.textContent = message;
+            DOMElements.toast.className = `fixed bottom-5 right-5 py-2 px-4 rounded-lg shadow-lg ${isError ? 'bg-red-500' : 'bg-green-500'} text-white`;
+            setTimeout(() => { DOMElements.toast.className += ' hidden'; }, 3000);
+        };
+
+        // --- FIREBASE UTILS ---
+        const uploadImage = async (file) => {
+            if (!file) return null;
+            const storageRef = ref(storage, `images/${Date.now()}_${file.name}`);
+            showLoader('Téléversement de l\'image...');
+            await uploadBytes(storageRef, file);
+            const url = await getDownloadURL(storageRef);
+            hideLoader();
+            return url;
+        };
+
+        // --- RENDER FUNCTIONS ---
+        const renderAbout = (content) => DOMElements.aboutContent.innerHTML = content.replace(/\n/g, '<br>');
+        const renderYoutubePlayer = (url) => {
+            if (url) {
+                DOMElements.youtubePlayerContainer.innerHTML = `<iframe class="w-full h-full" src="${url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            } else {
+                DOMElements.youtubePlayerContainer.innerHTML = `<div class="w-full h-full bg-gray-800 flex items-center justify-center"><p class="text-gray-400">Le lien du direct sera bientôt disponible.</p></div>`;
+            }
+        };
+        const renderEvents = (events) => {
+            DOMElements.eventsGrid.innerHTML = events.map(event => `
+                <div class="glass-effect rounded-lg overflow-hidden shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+                    <img src="${event.image}" alt="${event.title}" class="w-full h-56 object-cover">
+                    <div class="p-6"><h3 class="text-xl font-bold mb-2">${event.title}</h3><p class="text-gray-400">${event.description}</p></div>
+                </div>`).join('');
+        };
+        const renderCandidates = (candidates) => {
+            DOMElements.candidatesGrid.innerHTML = candidates.map(c => `
+                <div class="text-center">
+                    <div class="relative group">
+                        <img src="${c.photo}" alt="${c.name}" class="w-full h-auto rounded-lg shadow-lg object-cover aspect-square">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 rounded-lg">
+                            <button data-candidate-id="${c.id}" class="vote-btn bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full">Voter</button>
+                        </div>
+                    </div>
+                    <h3 class="mt-4 text-lg font-semibold">${c.name}</h3>
+                </div>`).join('');
+            document.querySelectorAll('.vote-btn').forEach(b => b.addEventListener('click', handleVote));
+        };
+        const renderAdminLists = (events, candidates) => {
+            DOMElements.eventsListAdmin.innerHTML = events.map(e => `<div class="flex justify-between items-center bg-gray-800 p-2 rounded"><span>${e.title}</span><button data-event-id="${e.id}" class="delete-event-btn text-red-500"><i class="fas fa-trash"></i></button></div>`).join('');
+            DOMElements.candidatesListAdmin.innerHTML = candidates.map(c => `<div class="flex justify-between items-center bg-gray-800 p-2 rounded"><span>${c.name}</span><button data-candidate-id="${c.id}" class="delete-candidate-btn text-red-500"><i class="fas fa-trash"></i></button></div>`).join('');
+            document.querySelectorAll('.delete-event-btn').forEach(b => b.addEventListener('click', handleDeleteEvent));
+            document.querySelectorAll('.delete-candidate-btn').forEach(b => b.addEventListener('click', handleDeleteCandidate));
+        };
+        const renderVotes = (votes) => {
+            DOMElements.votesResults.innerHTML = votes.map(v => `<div class="flex justify-between"><span>${v.name}</span><span class="font-bold text-indigo-400">${v.votes} votes</span></div>`).join('');
+        };
+        const renderMessages = (messages) => {
+            DOMElements.messagesList.innerHTML = messages.map(msg => `<div class="bg-gray-800 p-4 rounded-lg"><p class="font-bold">${msg.name} <span class="text-gray-400">&lt;${msg.email}&gt;</span></p><p class="mt-2 text-gray-300">${msg.message}</p></div>`).join('');
+        };
+
+        // --- EVENT HANDLERS ---
+        async function handleVote(e) {
+            const candidateId = e.target.dataset.candidateId;
+            const voteRef = doc(db, "votes", candidateId);
+            try {
+                await setDoc(voteRef, { votes: increment(1) }, { merge: true });
+                showToast('Votre vote a été enregistré !');
+            } catch (error) {
+                console.error("Error voting: ", error);
+                showToast('Erreur lors du vote.', true);
+            }
+        }
+        async function handleContactSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            showLoader('Envoi du message...');
+            try {
+                await addDoc(collection(db, "messages"), {
+                    name: form.name.value,
+                    email: form.email.value,
+                    message: form.message.value,
+                    createdAt: new Date()
+                });
+                showToast('Message envoyé avec succès !');
+                form.reset();
+            } catch (error) {
+                console.error("Error sending message: ", error);
+                showToast('Erreur lors de l\'envoi.', true);
+            }
+            hideLoader();
+        }
+        function handleLogin(e) {
+            e.preventDefault();
+            if (document.getElementById('password').value === ADMIN_PASSWORD) {
+                adminLoggedIn = true;
+                DOMElements.loginModal.classList.add('hidden');
+                DOMElements.dashboard.classList.remove('hidden');
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+        }
+        function handleLogout() {
+            adminLoggedIn = false;
+            showPage('public-site');
+        }
+        async function handleSettingsSave(e) {
+            e.preventDefault();
+            const newLink = DOMElements.youtubeLinkInput.value;
+            try {
+                await setDoc(doc(db, "settings", "main"), { youtubeLink: newLink }, { merge: true });
+                showToast('Paramètres sauvegardés.');
+            } catch (error) {
+                console.error("Error saving settings: ", error);
+                showToast('Erreur de sauvegarde.', true);
+            }
+        }
+        async function handleAboutSave(e) {
+            e.preventDefault();
+            const newContent = DOMElements.aboutEditor.value;
+            try {
+                await setDoc(doc(db, "about", "main"), { content: newContent });
+                showToast('Section "À Propos" mise à jour.');
+            } catch (error) {
+                console.error("Error saving about: ", error);
+                showToast('Erreur de sauvegarde.', true);
+            }
+        }
+        async function handleAddEvent(e) {
+            e.preventDefault();
+            const form = e.target;
+            const title = form.querySelector('#event-title').value;
+            const desc = form.querySelector('#event-desc').value;
+            const file = form.querySelector('#event-image').files[0];
+            if (!file) { showToast('Veuillez choisir une image.', true); return; }
+            
+            try {
+                const imageUrl = await uploadImage(file);
+                await addDoc(collection(db, "events"), { title, description: desc, image: imageUrl });
+                showToast('Événement ajouté.');
+                form.reset();
+            } catch (error) {
+                console.error("Error adding event: ", error);
+                showToast('Erreur lors de l\'ajout.', true);
+                hideLoader();
+            }
+        }
+        async function handleDeleteEvent(e) {
+            const eventId = e.currentTarget.dataset.eventId;
+            if (confirm('Supprimer cet événement ?')) {
+                await deleteDoc(doc(db, "events", eventId));
+                showToast('Événement supprimé.', true);
+            }
+        }
+        async function handleAddCandidate(e) {
+            e.preventDefault();
+            const form = e.target;
+            const name = form.querySelector('#candidate-name').value;
+            const file = form.querySelector('#candidate-photo').files[0];
+            if (!file) { showToast('Veuillez choisir une photo.', true); return; }
+
+            try {
+                const photoUrl = await uploadImage(file);
+                await addDoc(collection(db, "candidates"), { name, photo: photoUrl });
+                showToast('Candidat ajouté.');
+                form.reset();
+            } catch (error) {
+                console.error("Error adding candidate: ", error);
+                showToast('Erreur lors de l\'ajout.', true);
+                hideLoader();
+            }
+        }
+        async function handleDeleteCandidate(e) {
+            const candidateId = e.currentTarget.dataset.candidateId;
+            if (confirm('Supprimer ce candidat ?')) {
+                await deleteDoc(doc(db, "candidates", candidateId));
+                // Note: Votes for this candidate will remain but won't be displayed.
+                // A more complex cleanup would be needed for a production app.
+                showToast('Candidat supprimé.', true);
+            }
+        }
+        async function handleResetVotes() {
+            if (confirm('Réinitialiser TOUS les votes ? Action irréversible.')) {
+                showLoader('Réinitialisation...');
+                const votesCollection = collection(db, 'votes');
+                const votesSnapshot = await getDocs(votesCollection);
+                const batch = writeBatch(db);
+                votesSnapshot.docs.forEach(doc => batch.delete(doc.ref));
+                await batch.commit();
+                hideLoader();
+                showToast('Votes réinitialisés.');
+            }
+        }
+
+        // --- PAGE NAVIGATION & ADMIN TRIGGER ---
+        function showPage(pageId) {
+            DOMElements.publicSite.classList.add('hidden');
+            DOMElements.adminPanel.classList.add('hidden');
+            document.getElementById(pageId).classList.remove('hidden');
+
+            if (pageId === 'admin-panel') {
+                if (adminLoggedIn) {
+                    DOMElements.loginModal.classList.add('hidden');
+                    DOMElements.dashboard.classList.remove('hidden');
+                } else {
+                    DOMElements.loginModal.classList.remove('hidden');
+                    DOMElements.dashboard.classList.add('hidden');
+                }
+            }
+        }
+        let keySequence = '';
+        document.addEventListener('keyup', (e) => {
+            keySequence += e.key;
+            if (keySequence.length > 5) {
+                keySequence = keySequence.slice(-5);
+            }
+            if (keySequence.toLowerCase() === 'admin') {
+                showPage('admin-panel');
+                keySequence = ''; // Reset sequence
+            }
+        });
+
+        // --- INITIALIZATION ---
+        async function main() {
+            showLoader();
+            try {
+                await signInAnonymously(auth);
+                console.log("Signed in anonymously.");
+
+                // Set up real-time listeners
+                onSnapshot(doc(db, "about", "main"), (doc) => {
+                    renderAbout(doc.data()?.content || "Contenu à propos bientôt disponible.");
+                    if(adminLoggedIn) DOMElements.aboutEditor.value = doc.data()?.content;
+                });
+                onSnapshot(doc(db, "settings", "main"), (doc) => {
+                    renderYoutubePlayer(doc.data()?.youtubeLink);
+                    if(adminLoggedIn) DOMElements.youtubeLinkInput.value = doc.data()?.youtubeLink;
+                });
+                onSnapshot(collection(db, "events"), (snapshot) => {
+                    const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    renderEvents(events);
+                    if(adminLoggedIn) renderAdminLists(events, []); // Partial update
+                });
+                onSnapshot(collection(db, "candidates"), (snapshot) => {
+                    const candidates = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    renderCandidates(candidates);
+                    onSnapshot(collection(db, "events"), (eventSnapshot) => { // Re-fetch events to pass to admin list
+                        const events = eventSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                        if(adminLoggedIn) renderAdminLists(events, candidates);
+                    });
+                });
+                onSnapshot(collection(db, "votes"), async (snapshot) => {
+                    const votesData = {};
+                    snapshot.docs.forEach(doc => {
+                        votesData[doc.id] = doc.data().votes;
+                    });
+                    const candidatesSnapshot = await getDocs(collection(db, 'candidates'));
+                    const candidates = candidatesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    const voteResults = candidates.map(c => ({ name: c.name, votes: votesData[c.id] || 0 })).sort((a, b) => b.votes - a.votes);
+                    if(adminLoggedIn) renderVotes(voteResults);
+                });
+                onSnapshot(query(collection(db, "messages")), (snapshot) => {
+                    const messages = snapshot.docs.map(doc => doc.data()).sort((a, b) => b.createdAt - a.createdAt);
+                    if(adminLoggedIn) renderMessages(messages);
+                });
+
+                // Attach event listeners
+                document.getElementById('login-form').addEventListener('submit', handleLogin);
+                document.getElementById('logout-button').addEventListener('click', handleLogout);
+                document.getElementById('contact-form').addEventListener('submit', handleContactSubmit);
+                document.getElementById('settings-form').addEventListener('submit', handleSettingsSave);
+                document.getElementById('about-form').addEventListener('submit', handleAboutSave);
+                document.getElementById('event-form').addEventListener('submit', handleAddEvent);
+                document.getElementById('candidate-form').addEventListener('submit', handleAddCandidate);
+                document.getElementById('reset-votes').addEventListener('click', handleResetVotes);
+                document.getElementById('mobile-menu-button').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
+                document.querySelectorAll('#mobile-menu a').forEach(link => link.addEventListener('click', () => document.getElementById('mobile-menu').classList.add('hidden')));
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => anchor.addEventListener('click', function(e){ e.preventDefault(); document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' }); }));
+
+            } catch (error) {
+                console.error("Firebase Initialization Error:", error);
+                if (error.code === 'invalid-api-key') {
+                    document.body.innerHTML = `<div class="min-h-screen flex items-center justify-center text-center bg-red-900 text-white p-8"><div><h1 class="text-3xl font-bold">ERREUR DE CONFIGURATION</h1><p class="mt-4">La configuration de Firebase est invalide. Veuillez suivre les instructions pour créer votre projet Firebase et copier/coller votre objet de configuration dans le code.</p></div></div>`;
+                }
+            } finally {
+                hideLoader();
+            }
+        }
+
+        main();
+    </script>
+</body>
+</html>
+<script>
+    
