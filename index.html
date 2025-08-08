@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BigBoss Group</title>
+    <title>BigBoss Group - Pro</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,73 +17,101 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        /* Custom Styles */
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #111827; /* Dark background */
+            background-color: #000000; /* Fond noir */
+            color: #e5e7eb;
+            overflow-x: hidden;
         }
-        
-        /* Glassmorphism Effect */
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
         .glass-effect {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(17, 24, 39, 0.6); /* Darker glass effect */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1f2937;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #4f46e5;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #6366f1;
-        }
-        
-        /* Smooth transitions */
-        .section {
-            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-        }
-        
-        /* Animation for appearing sections */
-        .fade-in {
-            animation: fadeIn 0.8s ease-in-out;
-        }
+        .fade-in { animation: fadeIn 0.8s ease-in-out; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        #loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4f46e5;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Vote Bar Styles */
+        .vote-bar-container {
+            background-color: #374151;
+            border-radius: 9999px;
+            overflow: hidden;
+            height: 1.25rem; /* 20px */
+        }
+        .vote-bar {
+            background: linear-gradient(90deg, #4f46e5, #a78bfa);
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.5s ease-in-out;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.875rem; /* 14px */
+            line-height: 1.25rem; /* 20px */
+        }
     </style>
 </head>
-<body class="text-gray-200">
+<body>
+    <div id="starfield"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-75 flex-col items-center justify-center z-[100] hidden">
+        <div id="loader"></div>
+        <p class="text-white mt-4" id="loading-text">Chargement...</p>
+    </div>
 
     <!-- =========== PUBLIC SITE =========== -->
-    <div id="public-site">
+    <div id="public-site" class="relative z-10">
         <!-- Header -->
         <header class="glass-effect sticky top-0 z-50">
             <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
                 <div class="text-2xl font-bold text-white">
-                    <img src="https://placehold.co/150x50/111827/FFFFFF?text=BigBoss+Group" alt="Logo BigBoss Group" class="h-10">
+                    <img id="site-logo" src="https://placehold.co/150x50/000000/FFFFFF?text=BigBoss+Group" alt="Logo BigBoss Group" class="h-10">
                 </div>
                 <ul class="hidden md:flex items-center space-x-8">
-                    <li><a href="#hero" class="hover:text-indigo-400 transition-colors">Accueil</a></li>
-                    <li><a href="#about" class="hover:text-indigo-400 transition-colors">À Propos</a></li>
-                    <li><a href="#events" class="hover:text-indigo-400 transition-colors">Événements</a></li>
-                    <li><a href="#shows" class="hover:text-indigo-400 transition-colors">Émissions</a></li>
-                    <li><a href="#vote" class="hover:text-indigo-400 transition-colors">Vote</a></li>
-                    <li><a href="#contact" class="hover:text-indigo-400 transition-colors">Contact</a></li>
+                    <li><a href="#hero" class="hover:text-indigo-400">Accueil</a></li>
+                    <li><a href="#about" class="hover:text-indigo-400">À Propos</a></li>
+                    <li><a href="#events" class="hover:text-indigo-400">Événements</a></li>
+                    <li><a href="#shows" class="hover:text-indigo-400">Émissions</a></li>
+                    <li><a href="#vote" class="hover:text-indigo-400">Vote</a></li>
+                    <li><a href="#contact" class="hover:text-indigo-400">Contact</a></li>
                 </ul>
-                <button class="md:hidden" id="mobile-menu-button">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
+                <button class="md:hidden" id="mobile-menu-button"><i class="fas fa-bars text-2xl"></i></button>
             </nav>
-            <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
                  <a href="#hero" class="block py-2 hover:text-indigo-400">Accueil</a>
                  <a href="#about" class="block py-2 hover:text-indigo-400">À Propos</a>
@@ -95,512 +123,197 @@
         </header>
 
         <main>
-            <!-- Hero Section -->
-            <section id="hero" class="min-h-screen flex items-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop');">
-                <div class="container mx-auto px-6 text-center bg-black bg-opacity-50 p-10 rounded-lg">
-                    <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4 fade-in">Bienvenue chez BigBoss Group</h1>
-                    <p class="text-lg md:text-xl text-gray-300 mb-8 fade-in">Votre partenaire pour des événements et des divertissements inoubliables.</p>
-                    <a href="#events" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105">Découvrir nos événements</a>
+            <section id="hero" class="min-h-screen flex items-center bg-cover bg-center bg-no-repeat">
+                <div class="container mx-auto px-6 text-center bg-black bg-opacity-60 p-10 rounded-lg">
+                    <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4 fade-in"></h1>
+                    <p id="hero-subtitle" class="text-lg md:text-xl text-gray-300 mb-8 fade-in"></p>
                 </div>
             </section>
-
-            <!-- About Section -->
-            <section id="about" class="py-20 bg-gray-900">
-                <div class="container mx-auto px-6 section">
-                    <h2 class="text-3xl font-bold text-center mb-10">À Propos de Nous</h2>
-                    <div id="about-content" class="max-w-3xl mx-auto text-center text-gray-400 leading-relaxed">
-                        <!-- Le contenu sera injecté ici par JavaScript -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Events Section -->
-            <section id="events" class="py-20">
-                <div class="container mx-auto px-6 section">
-                    <h2 class="text-3xl font-bold text-center mb-12">Nos Événements</h2>
-                    <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <!-- Les cartes d'événements seront injectées ici -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Shows Section -->
-            <section id="shows" class="py-20 bg-gray-900">
-                <div class="container mx-auto px-6 section">
-                    <h2 class="text-3xl font-bold text-center mb-10">Suivez nos Émissions en Direct</h2>
-                    <div class="aspect-w-16 aspect-h-9 max-w-4xl mx-auto rounded-lg overflow-hidden shadow-2xl">
-                         <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Vote Section -->
-            <section id="vote" class="py-20">
-                <div class="container mx-auto px-6 section">
-                    <h2 class="text-3xl font-bold text-center mb-12">Votez pour votre Candidat Préféré</h2>
-                    <div id="candidates-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        <!-- Les cartes des candidats seront injectées ici -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Contact Section -->
-            <section id="contact" class="py-20 bg-gray-900">
-                <div class="container mx-auto px-6 section">
-                    <h2 class="text-3xl font-bold text-center mb-10">Contactez-nous</h2>
-                    <div class="max-w-lg mx-auto glass-effect rounded-lg p-8">
-                        <form id="contact-form">
-                            <div class="mb-4">
-                                <label for="name" class="block mb-2">Nom</label>
-                                <input type="text" id="name" name="name" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 focus:outline-none focus:border-indigo-500" required>
-                            </div>
-                            <div class="mb-4">
-                                <label for="email" class="block mb-2">Email</label>
-                                <input type="email" id="email" name="email" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 focus:outline-none focus:border-indigo-500" required>
-                            </div>
-                            <div class="mb-4">
-                                <label for="message" class="block mb-2">Message</label>
-                                <textarea id="message" name="message" rows="4" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 focus:outline-none focus:border-indigo-500" required></textarea>
-                            </div>
-                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded transition-colors">Envoyer le Message</button>
-                        </form>
-                    </div>
-                </div>
-            </section>
+            <section id="about" class="py-20 bg-black/50"><div class="container mx-auto px-6"><h2 class="text-3xl font-bold text-center mb-10">À Propos de Nous</h2><div id="about-content" class="max-w-3xl mx-auto text-center text-gray-400 leading-relaxed"></div></div></section>
+            <section id="events" class="py-20"><div class="container mx-auto px-6"><h2 class="text-3xl font-bold text-center mb-12">Nos Événements</h2><div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div></div></section>
+            <section id="shows" class="py-20 bg-black/50"><div class="container mx-auto px-6"><h2 class="text-3xl font-bold text-center mb-10">Suivez nos Émissions en Direct</h2><div id="youtube-player-container" class="aspect-w-16 aspect-h-9 max-w-4xl mx-auto rounded-lg overflow-hidden shadow-2xl"></div></div></section>
+            <section id="vote" class="py-20"><div class="container mx-auto px-6"><h2 class="text-3xl font-bold text-center mb-12">Votez pour votre Candidat Préféré</h2><div id="candidates-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"></div></div></section>
+            <section id="contact" class="py-20 bg-black/50"><div class="container mx-auto px-6"><h2 class="text-3xl font-bold text-center mb-10">Contactez-nous</h2><div class="max-w-lg mx-auto glass-effect rounded-lg p-8"><form id="contact-form"><div class="mb-4"><label for="name" class="block mb-2">Nom</label><input type="text" id="name" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 focus:outline-none focus:border-indigo-500" required></div><div class="mb-4"><label for="email" class="block mb-2">Email</label><input type="email" id="email" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 focus:outline-none focus:border-indigo-500" required></div><div class="mb-4"><label for="message" class="block mb-2">Message</label><textarea id="message" rows="4" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 focus:outline-none focus:border-indigo-500" required></textarea></div><button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded">Envoyer</button></form></div></div></section>
         </main>
 
-        <!-- Footer -->
-        <footer class="bg-gray-900 py-6">
+        <footer class="bg-gray-900/50 py-6">
             <div class="container mx-auto px-6 text-center text-gray-500">
-                <p>&copy; 2024. Créé par Digital Training school pour BigBoss Group.</p>
-                <a href="#" id="admin-link" class="text-xs hover:text-indigo-400 mt-2 inline-block">Admin</a>
+                <p id="copyright-text"></p>
             </div>
         </footer>
     </div>
 
     <!-- =========== ADMIN PANEL (hidden by default) =========== -->
-    <div id="admin-panel" class="hidden min-h-screen bg-gray-900 p-4 sm:p-8">
-        <!-- Login Modal -->
+    <div id="admin-panel" class="hidden min-h-screen bg-gray-900 p-4 sm:p-8 relative z-20">
         <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-            <div class="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-sm">
-                <h2 class="text-2xl font-bold text-center mb-6">Accès Administrateur</h2>
-                <form id="login-form">
-                    <div class="mb-4">
-                        <label for="password" class="block mb-2">Mot de passe</label>
-                        <input type="password" id="password" class="w-full bg-gray-700 border border-gray-600 rounded py-2 px-3 focus:outline-none focus:border-indigo-500">
-                    </div>
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">Se connecter</button>
-                    <p id="login-error" class="text-red-500 text-center mt-4 hidden">Mot de passe incorrect.</p>
-                </form>
-            </div>
+            <div class="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-sm"><h2 class="text-2xl font-bold text-center mb-6">Accès Administrateur</h2><form id="login-form"><div class="mb-4"><label for="password" class="block mb-2">Mot de passe</label><input type="password" id="password" class="w-full bg-gray-700 border border-gray-600 rounded py-2 px-3"></div><button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">Se connecter</button><p id="login-error" class="text-red-500 text-center mt-4 hidden">Mot de passe incorrect.</p></form></div>
         </div>
-
-        <!-- Admin Dashboard (hidden until login) -->
         <div id="dashboard" class="hidden">
-            <div class="flex justify-between items-center mb-8">
-                <h1 class="text-3xl font-bold">Panneau d'Administration</h1>
-                <button id="logout-button" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Déconnexion</button>
-            </div>
-
+            <div class="flex justify-between items-center mb-8"><h1 class="text-3xl font-bold">Panneau d'Administration</h1><button id="logout-button" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Déconnexion</button></div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
-                <!-- Manage About Section -->
-                <div class="glass-effect p-6 rounded-lg">
-                    <h2 class="text-2xl font-semibold mb-4">Gérer la section "À Propos"</h2>
-                    <form id="about-form">
-                        <textarea id="about-editor" rows="6" class="w-full bg-gray-800 border border-gray-700 rounded p-2 mb-4"></textarea>
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Sauvegarder</button>
+                <div class="glass-effect p-6 rounded-lg lg:col-span-2"><h2 class="text-2xl font-semibold mb-4">Paramètres Généraux du Site</h2>
+                    <form id="settings-form" class="space-y-4">
+                        <div><label for="hero-title-input" class="block mb-2">Titre Principal (Accueil)</label><input type="text" id="hero-title-input" class="w-full bg-gray-800 p-2 rounded"></div>
+                        <div><label for="hero-subtitle-input" class="block mb-2">Sous-titre (Accueil)</label><input type="text" id="hero-subtitle-input" class="w-full bg-gray-800 p-2 rounded"></div>
+                        <div><label for="youtube-link" class="block mb-2">Lien Live YouTube</label><input type="url" id="youtube-link" placeholder="https://www.youtube.com/embed/..." class="w-full bg-gray-800 p-2 rounded"></div>
+                        <div><label for="copyright-input" class="block mb-2">Texte du Copyright</label><input type="text" id="copyright-input" class="w-full bg-gray-800 p-2 rounded"></div>
+                        <div><label class="block mb-2">Logo du site</label><input type="file" id="logo-input" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"></div>
+                        <div><label class="block mb-2">Image de fond (Accueil)</label><input type="file" id="hero-bg-input" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"></div>
+                        <button type="submit" class="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Sauvegarder les Paramètres</button>
                     </form>
                 </div>
 
-                <!-- Manage Events -->
-                <div class="glass-effect p-6 rounded-lg">
-                    <h2 class="text-2xl font-semibold mb-4">Gérer les Événements</h2>
-                    <form id="event-form" class="mb-6">
-                        <input type="text" id="event-title" placeholder="Titre de l'événement" class="w-full bg-gray-800 p-2 rounded mb-2" required>
-                        <input type="text" id="event-image" placeholder="URL de l'image" class="w-full bg-gray-800 p-2 rounded mb-2" required>
-                        <textarea id="event-desc" placeholder="Description" class="w-full bg-gray-800 p-2 rounded mb-2" required></textarea>
-                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Ajouter l'Événement</button>
-                    </form>
-                    <div id="events-list-admin" class="space-y-2"></div>
-                </div>
-
-                <!-- Manage Candidates -->
-                <div class="glass-effect p-6 rounded-lg">
-                    <h2 class="text-2xl font-semibold mb-4">Gérer les Candidats</h2>
-                    <form id="candidate-form" class="mb-6">
-                        <input type="text" id="candidate-name" placeholder="Nom du candidat" class="w-full bg-gray-800 p-2 rounded mb-2" required>
-                        <input type="text" id="candidate-photo" placeholder="URL de la photo" class="w-full bg-gray-800 p-2 rounded mb-2" required>
-                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Ajouter le Candidat</button>
-                    </form>
-                    <div id="candidates-list-admin" class="space-y-2"></div>
-                </div>
-
-                <!-- View Votes -->
-                <div class="glass-effect p-6 rounded-lg">
-                    <h2 class="text-2xl font-semibold mb-4">Résultats des Votes</h2>
-                    <div id="votes-results" class="space-y-2 mb-4"></div>
-                    <button id="reset-votes" class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Réinitialiser les votes</button>
-                </div>
-
-                 <!-- View Messages -->
-                <div class="glass-effect p-6 rounded-lg lg:col-span-2">
-                    <h2 class="text-2xl font-semibold mb-4">Messages Reçus</h2>
-                    <div id="messages-list" class="space-y-4"></div>
-                </div>
-
+                <div class="glass-effect p-6 rounded-lg"><h2 class="text-2xl font-semibold mb-4">Gérer "À Propos"</h2><form id="about-form"><textarea id="about-editor" rows="6" class="w-full bg-gray-800 p-2 rounded mb-4"></textarea><button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Sauvegarder</button></form></div>
+                <div class="glass-effect p-6 rounded-lg"><h2 class="text-2xl font-semibold mb-4">Gérer les Événements</h2><form id="event-form" class="mb-6"><input type="text" id="event-title" placeholder="Titre" class="w-full bg-gray-800 p-2 rounded mb-2" required><label class="block mb-2">Image</label><input type="file" id="event-image" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" required><textarea id="event-desc" placeholder="Description" class="w-full bg-gray-800 p-2 rounded mt-2" required></textarea><button type="submit" class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Ajouter</button></form><div id="events-list-admin" class="space-y-2"></div></div>
+                <div class="glass-effect p-6 rounded-lg"><h2 class="text-2xl font-semibold mb-4">Gérer les Candidats</h2><form id="candidate-form" class="mb-6"><input type="text" id="candidate-name" placeholder="Nom" class="w-full bg-gray-800 p-2 rounded mb-2" required><label class="block mb-2">Photo</label><input type="file" id="candidate-photo" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" required><button type="submit" class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Ajouter</button></form><div id="candidates-list-admin" class="space-y-2"></div></div>
+                <div class="glass-effect p-6 rounded-lg lg:col-span-2"><h2 class="text-2xl font-semibold mb-4">Résultats des Votes</h2><div id="votes-results" class="space-y-4 mb-4"></div><button id="reset-votes" class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Réinitialiser</button></div>
+                <div class="glass-effect p-6 rounded-lg lg:col-span-2"><h2 class="text-2xl font-semibold mb-4">Messages Reçus</h2><div id="messages-list" class="space-y-4 max-h-96 overflow-y-auto"></div></div>
             </div>
         </div>
     </div>
     
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-5 right-5 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg hidden transition-opacity duration-300">
-        Action réussie !
-    </div>
+    <div id="toast" class="fixed bottom-5 right-5 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg hidden"></div>
 
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+        import { getFirestore, doc, onSnapshot, collection, addDoc, deleteDoc, writeBatch, query, getDocs, increment, setDoc, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- STATE MANAGEMENT ---
-            const state = {
-                about: `Ici, vous pouvez parler de BigBoss Group. Expliquez votre mission, votre vision, et ce qui rend votre entreprise unique. Parlez de votre expertise dans l'organisation d'événements, la production de spectacles et l'engagement communautaire. Ce texte peut être facilement modifié depuis le panneau d'administration.`,
-                events: [
-                    {
-                        id: 1,
-                        title: 'Gala Annuel BigBoss',
-                        description: 'Une soirée prestigieuse pour célébrer les réussites de l\'année avec nos partenaires et clients.',
-                        image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop'
-                    },
-                    {
-                        id: 2,
-                        title: 'Festival de Musique Urbaine',
-                        description: 'Le plus grand rassemblement de talents de la musique urbaine de la région. Ambiance garantie !',
-                        image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop'
+        const firebaseConfig = {
+            apiKey: "AIzaSyDovNu0v4WX1q2JvyVypaQC4QGSkMZ81xw",
+            authDomain: "bigboss-d18a3.firebaseapp.com",
+            projectId: "bigboss-d18a3",
+            storageBucket: "bigboss-d18a3.appspot.com", // Corrected storage bucket format
+            messagingSenderId: "1008754584753",
+            appId: "1:1008754584753:web:15f78f16c18434f7894690",
+            measurementId: "G-VV34J5ZC27"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+        const auth = getAuth(app);
+
+        const DOMElements = {
+            loadingOverlay: document.getElementById('loading-overlay'), loadingText: document.getElementById('loading-text'), publicSite: document.getElementById('public-site'), adminPanel: document.getElementById('admin-panel'), loginModal: document.getElementById('login-modal'), dashboard: document.getElementById('dashboard'), toast: document.getElementById('toast'),
+            siteLogo: document.getElementById('site-logo'), hero: document.getElementById('hero'), heroTitle: document.getElementById('hero-title'), heroSubtitle: document.getElementById('hero-subtitle'), aboutContent: document.getElementById('about-content'), eventsGrid: document.getElementById('events-grid'), candidatesGrid: document.getElementById('candidates-grid'), youtubePlayerContainer: document.getElementById('youtube-player-container'), copyrightText: document.getElementById('copyright-text'),
+            aboutEditor: document.getElementById('about-editor'), eventsListAdmin: document.getElementById('events-list-admin'), candidatesListAdmin: document.getElementById('candidates-list-admin'), votesResults: document.getElementById('votes-results'), messagesList: document.getElementById('messages-list'), 
+            settingsForm: {
+                title: document.getElementById('hero-title-input'), subtitle: document.getElementById('hero-subtitle-input'), youtube: document.getElementById('youtube-link'), copyright: document.getElementById('copyright-input'), logo: document.getElementById('logo-input'), heroBg: document.getElementById('hero-bg-input'),
+            }
+        };
+
+        const ADMIN_PASSWORD = 'Lifeisabitch13';
+        let adminLoggedIn = false;
+
+        const showLoader = (text = 'Chargement...') => { DOMElements.loadingText.textContent = text; DOMElements.loadingOverlay.classList.remove('hidden'); DOMElements.loadingOverlay.classList.add('flex'); };
+        const hideLoader = () => { DOMElements.loadingOverlay.classList.add('hidden'); DOMElements.loadingOverlay.classList.remove('flex'); };
+        const showToast = (message, isError = false) => { DOMElements.toast.textContent = message; DOMElements.toast.className = `fixed bottom-5 right-5 py-2 px-4 rounded-lg shadow-lg ${isError ? 'bg-red-500' : 'bg-green-500'} text-white`; setTimeout(() => { DOMElements.toast.className += ' hidden'; }, 3000); };
+        
+        const uploadImage = async (file, path = 'images') => { if (!file) return null; const storageRef = ref(storage, `${path}/${Date.now()}_${file.name}`); showLoader('Téléversement...'); await uploadBytes(storageRef, file); const url = await getDownloadURL(storageRef); hideLoader(); return { url, fullPath: storageRef.fullPath }; };
+        const deleteImage = async (fullPath) => { if (!fullPath) return; const imageRef = ref(storage, fullPath); try { await deleteObject(imageRef); } catch (error) { console.error("Error deleting image:", error); } };
+        
+        const renderHero = (title, subtitle, imageUrl) => { DOMElements.heroTitle.textContent = title; DOMElements.heroSubtitle.textContent = subtitle; if (imageUrl) DOMElements.hero.style.backgroundImage = `url('${imageUrl}')`; };
+        const renderLogo = (url) => { if(url) DOMElements.siteLogo.src = url; };
+        const renderCopyright = (text) => { DOMElements.copyrightText.textContent = text; };
+        const renderAbout = (content) => DOMElements.aboutContent.innerHTML = content.replace(/\n/g, '<br>');
+        const renderYoutubePlayer = (url) => { DOMElements.youtubePlayerContainer.innerHTML = url ? `<iframe class="w-full h-full" src="${url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` : `<div class="w-full h-full bg-gray-800 flex items-center justify-center"><p class="text-gray-400">Le lien du direct sera bientôt disponible.</p></div>`; };
+        const renderEvents = (events) => { DOMElements.eventsGrid.innerHTML = events.map(event => `<div class="glass-effect rounded-lg overflow-hidden shadow-lg transform hover:-translate-y-2 transition-transform duration-300"><img src="${event.image}" alt="${event.title}" class="w-full h-56 object-cover"><div class="p-6"><h3 class="text-xl font-bold mb-2">${event.title}</h3><p class="text-gray-400">${event.description}</p></div></div>`).join(''); };
+        const renderCandidates = (candidates) => { DOMElements.candidatesGrid.innerHTML = candidates.map(c => `<div class="text-center"><div class="relative group"><img src="${c.photo}" alt="${c.name}" class="w-full h-auto rounded-lg shadow-lg object-cover aspect-square"><div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 rounded-lg"><button data-candidate-id="${c.id}" class="vote-btn bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full">Voter</button></div></div><h3 class="mt-4 text-lg font-semibold">${c.name}</h3></div>`).join(''); document.querySelectorAll('.vote-btn').forEach(b => b.addEventListener('click', handleVote)); };
+        const renderAdminLists = (events, candidates) => { DOMElements.eventsListAdmin.innerHTML = events.map(e => `<div class="flex justify-between items-center bg-gray-800 p-2 rounded"><span>${e.title}</span><button data-event-id="${e.id}" data-image-path="${e.imagePath || ''}" class="delete-event-btn text-red-500"><i class="fas fa-trash"></i></button></div>`).join(''); DOMElements.candidatesListAdmin.innerHTML = candidates.map(c => `<div class="flex justify-between items-center bg-gray-800 p-2 rounded"><span>${c.name}</span><button data-candidate-id="${c.id}" data-photo-path="${c.photoPath || ''}" class="delete-candidate-btn text-red-500"><i class="fas fa-trash"></i></button></div>`).join(''); document.querySelectorAll('.delete-event-btn').forEach(b => b.addEventListener('click', handleDeleteEvent)); document.querySelectorAll('.delete-candidate-btn').forEach(b => b.addEventListener('click', handleDeleteCandidate)); };
+        const renderVotes = (votes) => { const totalVotes = votes.reduce((sum, v) => sum + v.votes, 0); if (totalVotes === 0) { DOMElements.votesResults.innerHTML = '<p class="text-gray-400 text-center">Aucun vote pour le moment.</p>'; return; } DOMElements.votesResults.innerHTML = votes.map(v => { const percentage = totalVotes > 0 ? ((v.votes / totalVotes) * 100).toFixed(1) : 0; return `<div><div class="flex justify-between items-center mb-1"><span class="font-bold">${v.name}</span><span class="text-gray-400">${v.votes} votes</span></div><div class="vote-bar-container"><div class="vote-bar" style="width: ${percentage}%;">${percentage}%</div></div></div>` }).join(''); };
+        const renderMessages = (messages) => { DOMElements.messagesList.innerHTML = messages.map(msg => `<div class="bg-gray-800 p-4 rounded-lg"><p class="font-bold">${msg.name} <span class="text-gray-400">&lt;${msg.email}&gt;</span></p><p class="mt-2 text-gray-300">${msg.message}</p></div>`).join(''); };
+        
+        async function handleVote(e) { const candidateId = e.target.dataset.candidateId; const voteRef = doc(db, "votes", candidateId); try { await setDoc(voteRef, { votes: increment(1) }, { merge: true }); showToast('Votre vote a été enregistré !'); } catch (error) { showToast('Erreur lors du vote.', true); } }
+        async function handleContactSubmit(e) { e.preventDefault(); const form = e.target; showLoader('Envoi du message...'); try { await addDoc(collection(db, "messages"), { name: form.name.value, email: form.email.value, message: form.message.value, createdAt: new Date() }); showToast('Message envoyé !'); form.reset(); } catch (error) { showToast('Erreur.', true); } hideLoader(); }
+        function handleLogin(e) { e.preventDefault(); if (document.getElementById('password').value === ADMIN_PASSWORD) { adminLoggedIn = true; DOMElements.loginModal.classList.add('hidden'); DOMElements.dashboard.classList.remove('hidden'); } else { document.getElementById('login-error').classList.remove('hidden'); } }
+        function handleLogout() { adminLoggedIn = false; showPage('public-site'); }
+        async function handleSettingsSave(e) {
+            e.preventDefault();
+            showLoader('Sauvegarde des paramètres...');
+            const settingsRef = doc(db, "settings", "main");
+            try {
+                const currentSettingsDoc = await getDoc(settingsRef);
+                const currentSettings = currentSettingsDoc.data() || {};
+                
+                const dataToUpdate = {
+                    heroTitle: DOMElements.settingsForm.title.value,
+                    heroSubtitle: DOMElements.settingsForm.subtitle.value,
+                    youtubeLink: DOMElements.settingsForm.youtube.value,
+                    copyrightText: DOMElements.settingsForm.copyright.value,
+                };
+
+                const logoFile = DOMElements.settingsForm.logo.files[0];
+                if (logoFile) {
+                    if (currentSettings.logoPath) await deleteImage(currentSettings.logoPath);
+                    const { url, fullPath } = await uploadImage(logoFile, 'settings');
+                    dataToUpdate.logoUrl = url;
+                    dataToUpdate.logoPath = fullPath;
+                }
+
+                const heroBgFile = DOMElements.settingsForm.heroBg.files[0];
+                if (heroBgFile) {
+                    if (currentSettings.heroImagePath) await deleteImage(currentSettings.heroImagePath);
+                    const { url, fullPath } = await uploadImage(heroBgFile, 'settings');
+                    dataToUpdate.heroImageUrl = url;
+                    dataToUpdate.heroImagePath = fullPath;
+                }
+
+                await setDoc(settingsRef, dataToUpdate, { merge: true });
+                showToast('Paramètres sauvegardés.');
+            } catch (error) {
+                console.error("Error saving settings:", error);
+                showToast('Erreur de sauvegarde.', true);
+            } finally {
+                hideLoader();
+            }
+        }
+        async function handleAboutSave(e) { e.preventDefault(); try { await setDoc(doc(db, "about", "main"), { content: DOMElements.aboutEditor.value }); showToast('Section "À Propos" mise à jour.'); } catch (error) { showToast('Erreur.', true); } }
+        async function handleAddEvent(e) { e.preventDefault(); const form = e.target; const file = form.querySelector('#event-image').files[0]; if (!file) { showToast('Veuillez choisir une image.', true); return; } try { const { url, fullPath } = await uploadImage(file, 'events'); await addDoc(collection(db, "events"), { title: form.querySelector('#event-title').value, description: form.querySelector('#event-desc').value, image: url, imagePath: fullPath }); showToast('Événement ajouté.'); form.reset(); } catch (error) { hideLoader(); } }
+        async function handleDeleteEvent(e) { const eventId = e.currentTarget.dataset.eventId; const imagePath = e.currentTarget.dataset.imagePath; if (confirm('Supprimer cet événement ?')) { await deleteDoc(doc(db, "events", eventId)); await deleteImage(imagePath); showToast('Événement supprimé.', true); } }
+        async function handleAddCandidate(e) { e.preventDefault(); const form = e.target; const file = form.querySelector('#candidate-photo').files[0]; if (!file) { showToast('Veuillez choisir une photo.', true); return; } try { const { url, fullPath } = await uploadImage(file, 'candidates'); await addDoc(collection(db, "candidates"), { name: form.querySelector('#candidate-name').value, photo: url, photoPath: fullPath }); showToast('Candidat ajouté.'); form.reset(); } catch (error) { hideLoader(); } }
+        async function handleDeleteCandidate(e) { const candidateId = e.currentTarget.dataset.candidateId; const photoPath = e.currentTarget.dataset.photoPath; if (confirm('Supprimer ce candidat ?')) { await deleteDoc(doc(db, "candidates", candidateId)); await deleteImage(photoPath); showToast('Candidat supprimé.', true); } }
+        async function handleResetVotes() { if (confirm('Réinitialiser TOUS les votes ?')) { showLoader('Réinitialisation...'); const votesCollection = collection(db, 'votes'); const votesSnapshot = await getDocs(votesCollection); const batch = writeBatch(db); votesSnapshot.docs.forEach(doc => batch.delete(doc.ref)); await batch.commit(); hideLoader(); showToast('Votes réinitialisés.'); } }
+        function showPage(pageId) { DOMElements.publicSite.classList.add('hidden'); DOMElements.adminPanel.classList.add('hidden'); document.getElementById(pageId).classList.remove('hidden'); if (pageId === 'admin-panel') { if (adminLoggedIn) { DOMElements.loginModal.classList.add('hidden'); DOMElements.dashboard.classList.remove('hidden'); } else { DOMElements.loginModal.classList.remove('hidden'); DOMElements.dashboard.classList.add('hidden'); } } }
+        let keySequence = ''; document.addEventListener('keyup', (e) => { keySequence += e.key; if (keySequence.length > 5) keySequence = keySequence.slice(-5); if (keySequence.toLowerCase() === 'admin') { showPage('admin-panel'); keySequence = ''; } });
+        
+        function createStars() { const starfield = document.getElementById('starfield'); for (let i = 0; i < 150; i++) { const star = document.createElement('div'); star.className = 'star'; const size = Math.random() * 3; star.style.width = `${size}px`; star.style.height = `${size}px`; star.style.top = `${Math.random() * 100}%`; star.style.left = `${Math.random() * 100}%`; star.style.animationDelay = `${Math.random() * 2}s`; star.style.animationDuration = `${2 + Math.random() * 2}s`; starfield.appendChild(star); } }
+
+        async function main() {
+            showLoader();
+            createStars();
+            try {
+                await signInAnonymously(auth);
+                onSnapshot(doc(db, "settings", "main"), (doc) => {
+                    const data = doc.data() || {};
+                    renderHero(data.heroTitle || 'Bienvenue chez BigBoss Group', data.heroSubtitle || 'Votre partenaire pour des événements inoubliables.', data.heroImageUrl || 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop');
+                    renderLogo(data.logoUrl);
+                    renderCopyright(data.copyrightText || '© 2024. Créé par Digital Training school pour BigBoss Group.');
+                    renderYoutubePlayer(data.youtubeLink);
+                    if(adminLoggedIn) {
+                        DOMElements.settingsForm.title.value = data.heroTitle || '';
+                        DOMElements.settingsForm.subtitle.value = data.heroSubtitle || '';
+                        DOMElements.settingsForm.youtube.value = data.youtubeLink || '';
+                        DOMElements.settingsForm.copyright.value = data.copyrightText || '';
                     }
-                ],
-                candidates: [
-                    { id: 1, name: 'Candidat Alpha', photo: 'https://placehold.co/400x400/312e81/ffffff?text=Alpha' },
-                    { id: 2, name: 'Candidate Beta', photo: 'https://placehold.co/400x400/86198f/ffffff?text=Beta' },
-                    { id: 3, name: 'Candidat Gamma', photo: 'https://placehold.co/400x400/15803d/ffffff?text=Gamma' }
-                ],
-                votes: {}, // { candidateId: count }
-                messages: [],
-                adminLoggedIn: false
-            };
-
-            const ADMIN_PASSWORD = 'Lifeisabitch13';
-
-            // --- DOM ELEMENTS ---
-            const publicSite = document.getElementById('public-site');
-            const adminPanel = document.getElementById('admin-panel');
-            const loginModal = document.getElementById('login-modal');
-            const dashboard = document.getElementById('dashboard');
-            const toast = document.getElementById('toast');
-
-            // --- UTILS ---
-            const saveState = () => {
-                localStorage.setItem('bigboss_data', JSON.stringify(state));
-            };
-
-            const loadState = () => {
-                const savedData = localStorage.getItem('bigboss_data');
-                if (savedData) {
-                    const parsedData = JSON.parse(savedData);
-                    // Merge saved data with default state to avoid breaking on new features
-                    Object.assign(state, parsedData);
-                }
-            };
-            
-            const showToast = (message, isError = false) => {
-                toast.textContent = message;
-                toast.classList.remove('hidden', 'bg-green-500', 'bg-red-500');
-                toast.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
-                setTimeout(() => {
-                    toast.classList.add('hidden');
-                }, 3000);
-            };
-
-            // --- RENDER FUNCTIONS ---
-            const renderPublicSite = () => {
-                // Render About
-                document.getElementById('about-content').innerHTML = state.about.replace(/\n/g, '<br>');
-
-                // Render Events
-                const eventsGrid = document.getElementById('events-grid');
-                eventsGrid.innerHTML = state.events.map(event => `
-                    <div class="glass-effect rounded-lg overflow-hidden shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
-                        <img src="${event.image}" alt="${event.title}" class="w-full h-56 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2">${event.title}</h3>
-                            <p class="text-gray-400">${event.description}</p>
-                        </div>
-                    </div>
-                `).join('');
-
-                // Render Candidates
-                const candidatesGrid = document.getElementById('candidates-grid');
-                candidatesGrid.innerHTML = state.candidates.map(candidate => `
-                    <div class="text-center">
-                        <div class="relative group">
-                            <img src="${candidate.photo}" alt="${candidate.name}" class="w-full h-auto rounded-lg shadow-lg object-cover aspect-square">
-                            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
-                                <button data-candidate-id="${candidate.id}" class="vote-btn bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full transition-transform transform hover:scale-105">
-                                    Voter
-                                </button>
-                            </div>
-                        </div>
-                        <h3 class="mt-4 text-lg font-semibold">${candidate.name}</h3>
-                    </div>
-                `).join('');
-                
-                // Add event listeners for new vote buttons
-                document.querySelectorAll('.vote-btn').forEach(button => {
-                    button.addEventListener('click', handleVote);
                 });
-            };
-
-            const renderAdminPanel = () => {
-                if (!state.adminLoggedIn) return;
-
-                // Render About Editor
-                document.getElementById('about-editor').value = state.about;
-
-                // Render Events List
-                const eventsListAdmin = document.getElementById('events-list-admin');
-                eventsListAdmin.innerHTML = state.events.map(event => `
-                    <div class="flex justify-between items-center bg-gray-800 p-2 rounded">
-                        <span>${event.title}</span>
-                        <button data-event-id="${event.id}" class="delete-event-btn text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
-                    </div>
-                `).join('');
+                onSnapshot(doc(db, "about", "main"), (doc) => { const content = doc.data()?.content || ""; renderAbout(content); if(adminLoggedIn) DOMElements.aboutEditor.value = content; });
+                onSnapshot(collection(db, "events"), (eventSnapshot) => { const events = eventSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); renderEvents(events); onSnapshot(collection(db, "candidates"), (candidateSnapshot) => { const candidates = candidateSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); renderCandidates(candidates); if(adminLoggedIn) renderAdminLists(events, candidates); }); });
+                onSnapshot(collection(db, "votes"), async (snapshot) => { const votesData = {}; snapshot.docs.forEach(doc => { votesData[doc.id] = doc.data().votes; }); const candidatesSnapshot = await getDocs(collection(db, 'candidates')); const candidates = candidatesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); const voteResults = candidates.map(c => ({ name: c.name, votes: votesData[c.id] || 0 })).sort((a, b) => b.votes - a.votes); if(adminLoggedIn) renderVotes(voteResults); });
+                onSnapshot(query(collection(db, "messages"), orderBy("createdAt", "desc")), (snapshot) => { const messages = snapshot.docs.map(doc => doc.data()); if(adminLoggedIn) renderMessages(messages); });
                 
-                document.querySelectorAll('.delete-event-btn').forEach(button => {
-                    button.addEventListener('click', handleDeleteEvent);
-                });
-
-                // Render Candidates List
-                const candidatesListAdmin = document.getElementById('candidates-list-admin');
-                candidatesListAdmin.innerHTML = state.candidates.map(candidate => `
-                    <div class="flex justify-between items-center bg-gray-800 p-2 rounded">
-                        <span>${candidate.name}</span>
-                        <button data-candidate-id="${candidate.id}" class="delete-candidate-btn text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
-                    </div>
-                `).join('');
-                
-                document.querySelectorAll('.delete-candidate-btn').forEach(button => {
-                    button.addEventListener('click', handleDeleteCandidate);
-                });
-
-                // Render Votes
-                const votesResults = document.getElementById('votes-results');
-                if (state.candidates.length > 0) {
-                    votesResults.innerHTML = state.candidates.map(candidate => `
-                        <div class="flex justify-between items-center">
-                            <span>${candidate.name}</span>
-                            <span class="font-bold text-indigo-400">${state.votes[candidate.id] || 0} votes</span>
-                        </div>
-                    `).join('');
-                } else {
-                    votesResults.innerHTML = '<p class="text-gray-500">Aucun candidat pour le moment.</p>';
-                }
-
-                // Render Messages
-                const messagesList = document.getElementById('messages-list');
-                if (state.messages.length > 0) {
-                    messagesList.innerHTML = state.messages.map(msg => `
-                        <div class="bg-gray-800 p-4 rounded-lg">
-                            <p class="font-bold">${msg.name} <span class="font-normal text-gray-400">&lt;${msg.email}&gt;</span></p>
-                            <p class="mt-2 text-gray-300">${msg.message}</p>
-                        </div>
-                    `).join('');
-                } else {
-                    messagesList.innerHTML = '<p class="text-gray-500">Aucun message reçu.</p>';
-                }
-            };
-
-            // --- EVENT HANDLERS ---
-            const handleVote = (e) => {
-                const candidateId = e.target.dataset.candidateId;
-                state.votes[candidateId] = (state.votes[candidateId] || 0) + 1;
-                saveState();
-                showToast('Votre vote a été enregistré !');
-                renderAdminPanel(); // Update admin panel in real-time if open
-            };
-            
-            const handleContactSubmit = (e) => {
-                e.preventDefault();
-                const form = e.target;
-                const message = {
-                    name: form.name.value,
-                    email: form.email.value,
-                    message: form.message.value,
-                };
-                state.messages.unshift(message); // Add to the beginning
-                saveState();
-                showToast('Message envoyé avec succès !');
-                form.reset();
-                renderAdminPanel();
-            };
-
-            const handleLogin = (e) => {
-                e.preventDefault();
-                const password = document.getElementById('password').value;
-                if (password === ADMIN_PASSWORD) {
-                    state.adminLoggedIn = true;
-                    loginModal.classList.add('hidden');
-                    dashboard.classList.remove('hidden');
-                    renderAdminPanel();
-                } else {
-                    const loginError = document.getElementById('login-error');
-                    loginError.classList.remove('hidden');
-                    setTimeout(() => loginError.classList.add('hidden'), 3000);
-                }
-            };
-            
-            const handleLogout = () => {
-                state.adminLoggedIn = false;
-                showPage('public-site');
-            };
-
-            const handleAboutSave = (e) => {
-                e.preventDefault();
-                state.about = document.getElementById('about-editor').value;
-                saveState();
-                showToast('Section "À Propos" mise à jour.');
-                renderPublicSite();
-            };
-            
-            const handleAddEvent = (e) => {
-                e.preventDefault();
-                const form = e.target;
-                const newEvent = {
-                    id: Date.now(),
-                    title: form.querySelector('#event-title').value,
-                    image: form.querySelector('#event-image').value,
-                    description: form.querySelector('#event-desc').value,
-                };
-                state.events.push(newEvent);
-                saveState();
-                showToast('Événement ajouté.');
-                renderPublicSite();
-                renderAdminPanel();
-                form.reset();
-            };
-
-            const handleDeleteEvent = (e) => {
-                const eventId = parseInt(e.currentTarget.dataset.eventId, 10);
-                state.events = state.events.filter(event => event.id !== eventId);
-                saveState();
-                showToast('Événement supprimé.', true);
-                renderPublicSite();
-                renderAdminPanel();
-            };
-
-            const handleAddCandidate = (e) => {
-                e.preventDefault();
-                const form = e.target;
-                const newCandidate = {
-                    id: Date.now(),
-                    name: form.querySelector('#candidate-name').value,
-                    photo: form.querySelector('#candidate-photo').value,
-                };
-                state.candidates.push(newCandidate);
-                saveState();
-                showToast('Candidat ajouté.');
-                renderPublicSite();
-                renderAdminPanel();
-                form.reset();
-            };
-            
-            const handleDeleteCandidate = (e) => {
-                const candidateId = parseInt(e.currentTarget.dataset.candidateId, 10);
-                state.candidates = state.candidates.filter(c => c.id !== candidateId);
-                // Also remove votes for this candidate
-                delete state.votes[candidateId];
-                saveState();
-                showToast('Candidat supprimé.', true);
-                renderPublicSite();
-                renderAdminPanel();
-            };
-
-            const handleResetVotes = () => {
-                if (confirm('Êtes-vous sûr de vouloir réinitialiser tous les votes ? Cette action est irréversible.')) {
-                    state.votes = {};
-                    saveState();
-                    showToast('Tous les votes ont été réinitialisés.');
-                    renderAdminPanel();
-                }
-            };
-
-            // --- PAGE NAVIGATION ---
-            const showPage = (pageId) => {
-                publicSite.classList.add('hidden');
-                adminPanel.classList.add('hidden');
-                document.getElementById(pageId).classList.remove('hidden');
-
-                if (pageId === 'admin-panel') {
-                    if (state.adminLoggedIn) {
-                        loginModal.classList.add('hidden');
-                        dashboard.classList.remove('hidden');
-                        renderAdminPanel();
-                    } else {
-                        loginModal.classList.remove('hidden');
-                        dashboard.classList.add('hidden');
-                    }
-                }
-            };
-
-            // --- INITIALIZATION ---
-            const init = () => {
-                loadState();
-                renderPublicSite();
-
-                // Setup event listeners
-                document.getElementById('admin-link').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    showPage('admin-panel');
-                });
-                
-                document.getElementById('login-form').addEventListener('submit', handleLogin);
-                document.getElementById('logout-button').addEventListener('click', handleLogout);
-                document.getElementById('contact-form').addEventListener('submit', handleContactSubmit);
-                
-                // Admin form listeners
-                document.getElementById('about-form').addEventListener('submit', handleAboutSave);
-                document.getElementById('event-form').addEventListener('submit', handleAddEvent);
-                document.getElementById('candidate-form').addEventListener('submit', handleAddCandidate);
-                document.getElementById('reset-votes').addEventListener('click', handleResetVotes);
-                
-                // Mobile menu toggle
-                const mobileMenuButton = document.getElementById('mobile-menu-button');
-                const mobileMenu = document.getElementById('mobile-menu');
-                mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
-                
-                // Close mobile menu on link click
-                mobileMenu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-                });
-                
-                // Smooth scrolling
-                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                    anchor.addEventListener('click', function (e) {
-                        const href = this.getAttribute('href');
-                        // Exclude admin link from smooth scroll
-                        if (href === '#' || href === '#admin') return;
-                        
-                        e.preventDefault();
-                        document.querySelector(href).scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    });
-                });
-            };
-
-            init();
-        });
+                document.getElementById('login-form').addEventListener('submit', handleLogin); document.getElementById('logout-button').addEventListener('click', handleLogout); document.getElementById('contact-form').addEventListener('submit', handleContactSubmit); document.getElementById('settings-form').addEventListener('submit', handleSettingsSave); document.getElementById('about-form').addEventListener('submit', handleAboutSave); document.getElementById('event-form').addEventListener('submit', handleAddEvent); document.getElementById('candidate-form').addEventListener('submit', handleAddCandidate); document.getElementById('reset-votes').addEventListener('click', handleResetVotes); document.getElementById('mobile-menu-button').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden')); document.querySelectorAll('#mobile-menu a').forEach(link => link.addEventListener('click', () => document.getElementById('mobile-menu').classList.add('hidden'))); document.querySelectorAll('a[href^="#"]').forEach(anchor => anchor.addEventListener('click', function(e){ e.preventDefault(); document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' }); }));
+            } catch (error) {
+                console.error("Firebase Initialization Error:", error);
+                if (error.code === 'invalid-api-key' || error.message.includes('No project') ) { document.body.innerHTML = `<div class="min-h-screen flex items-center justify-center text-center bg-red-900 text-white p-8"><div><h1 class="text-3xl font-bold">ERREUR DE CONFIGURATION</h1><p class="mt-4">La configuration de Firebase est invalide ou incomplète. Veuillez vérifier que vous avez bien copié/collé l'objet de configuration depuis votre console Firebase.</p></div></div>`; }
+            } finally {
+                hideLoader();
+            }
+        }
+        main();
     </script>
-
 </body>
 </html>
